@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    var modeText: String {
+
+    private var modeText: String {
         #if VULN
         return "Mode: VULNERABLE"
         #elseif FIXED
@@ -18,6 +19,7 @@ struct ContentView: View {
                     Text("Secure iOS Reference")
                         .font(.title2)
                         .bold()
+
                     Text(modeText)
                         .font(.headline)
                 }
@@ -25,6 +27,10 @@ struct ContentView: View {
                 Section("Modules") {
                     NavigationLink("Storage (UserDefaults vs Keychain)") {
                         StorageModuleView()
+                    }
+
+                    NavigationLink("Networking (HTTP vs ATS + pinning)") {
+                        NetworkingModuleView()
                     }
                 }
             }
