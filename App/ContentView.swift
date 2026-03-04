@@ -12,15 +12,24 @@ struct ContentView: View {
     }
 
     var body: some View {
-        VStack(spacing: 12) {
-            Text("Secure iOS Reference")
-                .font(.title2)
-                .bold()
+        NavigationStack {
+            List {
+                Section {
+                    Text("Secure iOS Reference")
+                        .font(.title2)
+                        .bold()
+                    Text(modeText)
+                        .font(.headline)
+                }
 
-            Text(modeText)
-                .font(.headline)
+                Section("Modules") {
+                    NavigationLink("Storage (UserDefaults vs Keychain)") {
+                        StorageModuleView()
+                    }
+                }
+            }
+            .navigationTitle("Home")
         }
-        .padding()
     }
 }
 
