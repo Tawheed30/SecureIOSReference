@@ -29,3 +29,7 @@ Demonstrate insecure local credential storage (VULN) vs secure storage (FIXED) u
 ## Files
 - `Modules/StorageModuleView.swift`
 - `Security/KeychainService.swift`
+## Networking module verification
+
+- **VULN:** request succeeded (HTTP allowed)
+- **FIXED:** ATS enforced (HTTP blocked by design)
