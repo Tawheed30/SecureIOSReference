@@ -10,8 +10,8 @@
 		50D9C7542F58194300FA800A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D9C7512F58194300FA800A /* ContentView.swift */; };
 		50D9C76B2F5862E600FA800A /* SecureIOSReferenceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D9C76A2F5862E600FA800A /* SecureIOSReferenceApp.swift */; };
 		50D9C76F2F586B9B00FA800A /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D9C76E2F586B8100FA800A /* KeychainService.swift */; };
-		50D9C7732F5870FB00FA800A /* NetworkingModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D9C7722F5870FB00FA800A /* NetworkingModuleView.swift */; };
-		50D9C7752F58744F00FA800A /* StorageModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D9C7742F58744F00FA800A /* StorageModuleView.swift */; };
+		50D9C7782F5940C800FA800A /* NetworkingModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D9C7762F5940C800FA800A /* NetworkingModuleView.swift */; };
+		50D9C7792F5940C800FA800A /* StorageModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D9C7772F5940C800FA800A /* StorageModuleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +39,8 @@
 		50D9C76A2F5862E600FA800A /* SecureIOSReferenceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureIOSReferenceApp.swift; sourceTree = "<group>"; };
 		50D9C76E2F586B8100FA800A /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		50D9C7712F586E6200FA800A /* storage.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = storage.md; sourceTree = "<group>"; };
-		50D9C7722F5870FB00FA800A /* NetworkingModuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingModuleView.swift; sourceTree = SOURCE_ROOT; };
-		50D9C7742F58744F00FA800A /* StorageModuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageModuleView.swift; sourceTree = SOURCE_ROOT; };
+		50D9C7762F5940C800FA800A /* NetworkingModuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NetworkingModuleView.swift; path = Modules/NetworkingModuleView.swift; sourceTree = SOURCE_ROOT; };
+		50D9C7772F5940C800FA800A /* StorageModuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StorageModuleView.swift; path = Modules/StorageModuleView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -124,8 +124,8 @@
 		50D9C75D2F581A3500FA800A /* Modules  */ = {
 			isa = PBXGroup;
 			children = (
-				50D9C7722F5870FB00FA800A /* NetworkingModuleView.swift */,
-				50D9C7742F58744F00FA800A /* StorageModuleView.swift */,
+				50D9C7762F5940C800FA800A /* NetworkingModuleView.swift */,
+				50D9C7772F5940C800FA800A /* StorageModuleView.swift */,
 			);
 			path = "Modules ";
 			sourceTree = "<group>";
@@ -304,10 +304,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50D9C7752F58744F00FA800A /* StorageModuleView.swift in Sources */,
-				50D9C7732F5870FB00FA800A /* NetworkingModuleView.swift in Sources */,
 				50D9C76F2F586B9B00FA800A /* KeychainService.swift in Sources */,
 				50D9C76B2F5862E600FA800A /* SecureIOSReferenceApp.swift in Sources */,
+				50D9C7782F5940C800FA800A /* NetworkingModuleView.swift in Sources */,
+				50D9C7792F5940C800FA800A /* StorageModuleView.swift in Sources */,
 				50D9C7542F58194300FA800A /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

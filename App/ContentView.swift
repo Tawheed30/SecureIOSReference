@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct ContentView: View {
-
     private var modeText: String {
         #if VULN
         return "Mode: VULNERABLE"
