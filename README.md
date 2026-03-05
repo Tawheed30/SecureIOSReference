@@ -7,8 +7,10 @@ A reference iOS app that demonstrates **vulnerable vs fixed** secure engineering
 - **Debug-FIXED**: secure implementations with notes on tradeoffs/limitations
 
 ## Modules
-- **Storage** — UserDefaults (VULN) vs Keychain (FIXED)  
+- **Storage** — UserDefaults (VULN) vs Keychain (FIXED)
   See: `Docs/storage.md`
+- **Networking** — ATS (HTTP) demo: VULN allows HTTP, FIXED blocks
+  See: `Docs/networking.md`
 
 ## How to run
 1. Xcode → Product → Scheme → Edit Scheme… → Run → Build Configuration:
