@@ -3,6 +3,7 @@ import SwiftUI
 struct NetworkingModuleView: View {
     @State private var urlString: String = "http://example.com"
     @State private var result: String = "Ready"
+    @State private var isLoading: Bool = false
 
     var body: some View {
         List {
@@ -18,7 +19,7 @@ struct NetworkingModuleView: View {
                         .clipShape(Capsule())
                 }
 
-                Text("Demonstrates plain HTTP behavior under ATS: VULN can be configured to allow HTTP, FIXED should enforce ATS.")
+                Text("Demonstrates plain HTTP behavior under ATS. VULN can be configured to allow HTTP; FIXED blocks HTTP by design and expects HTTPS.")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
@@ -30,7 +31,10 @@ struct NetworkingModuleView: View {
             }
 
             Section("Actions") {
-                Button("Send request") { sendRequest() }
+                Button(isLoading ? "Sending…" : "Send request") {
+                    sendRequest()
+                }
+                .disabled(isLoading)
 
                 Button("Reset", role: .destructive) {
                     urlString = "http://example.com"
@@ -65,64 +69,54 @@ struct NetworkingModuleView: View {
 
     private var notesText: String {
         #if VULN
-        return """
-VULN: this build is intended to demonstrate allowing insecure HTTP by weakening ATS (Info.plist). If ATS is not weakened, HTTP will still fail.
-"""
+        return "VULN: This build demonstrates allowing insecure HTTP by weakening ATS in Info.plist (NSAppTransportSecurity). If ATS is not weakened, HTTP will fail with -1022."
         #elseif FIXED
-        return """
-FIXED: ATS should remain strict. Plain HTTP is expected to fail (by design).
-"""
+        return "FIXED: HTTP is blocked by design. Use HTTPS URLs (e.g., https://example.com). ATS remains strict."
         #else
         return "Build with Debug-VULN or Debug-FIXED."
         #endif
     }
 
     private func sendRequest() {
-        guard let url = URL(string: urlString) else {
+        let trimmed = urlString.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let url = URL(string: trimmed),
+              let scheme = url.scheme?.lowercased() else {
             result = "Invalid URL"
             return
         }
 
         #if FIXED
-        // FIXED build: do not try to bypass ATS in code. ATS should block HTTP.
-        if url.scheme?.lowercased() == "http" {
+        if scheme == "http" {
             result = "FIXED: ATS enforced (HTTP blocked by design)"
             return
         }
         #endif
 
-        result = "Loading..."
+        isLoading = true
+        result = "Sending…"
 
-        URLSession.shared.dataTask(with: url) { _, response, error in
+        var req = URLRequest(url: url)
+        req.httpMethod = "GET"
+        req.timeoutInterval = 10
+
+        URLSession.shared.dataTask(with: req) { _, response, error in
             DispatchQueue.main.async {
+                isLoading = false
+
+                if let error = error as NSError? {
+                    #if VULN
+                    self.result = "VULN: failed (\(error.code)): \(error.localizedDescription)"
+                    #else
+                    self.result = "Failed (\(error.code)): \(error.localizedDescription)"
+                    #endif
+                    return
+                }
+
+                let status = (response as? HTTPURLResponse)?.statusCode ?? -1
                 #if VULN
-                if let nsError = error as NSError? {
-                    result = "VULN: failed (\(nsError.code)): \(nsError.localizedDescription)"
-                    return
-                }
-                if let http = response as? HTTPURLResponse {
-                    result = "VULN: request succeeded (HTTP \(http.statusCode))"
-                } else {
-                    result = "VULN: request succeeded"
-                }
-
-                #elseif FIXED
-                if let nsError = error as NSError? {
-                    result = "FIXED: failed (\(nsError.code)): \(nsError.localizedDescription)"
-                    return
-                }
-                if let http = response as? HTTPURLResponse {
-                    result = "FIXED: request succeeded (HTTP \(http.statusCode))"
-                } else {
-                    result = "FIXED: request succeeded"
-                }
-
+                self.result = "VULN: request succeeded (HTTP \(status))"
                 #else
-                if let nsError = error as NSError? {
-                    result = "Failed (\(nsError.code)): \(nsError.localizedDescription)"
-                } else {
-                    result = "Success"
-                }
+                self.result = "Request succeeded (HTTP \(status))"
                 #endif
             }
         }.resume()
